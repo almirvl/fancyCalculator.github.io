@@ -16,11 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
 ////AUDIO
 
 document.addEventListener('DOMContentLoaded', () => {
-  const audioTracks = [
-    'fancyCalculator.github.io/audio1.mp3',
-    'fancyCalculator.github.io/audio2.mp3',
-    'fancyCalculator.github.io/audio3.mp3',
-    'fancyCalculator.github.io/audio4.mp3',
+ const audioTracks = [
+    'audio1.mp3',
+    'audio2.mp3',
+    'audio3.mp3',
+    'audio4.mp3',
   ];
 
   const audioToggle = document.getElementById('audio-toggle');
