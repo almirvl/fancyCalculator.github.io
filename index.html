@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- StyleSheets -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Global Font Links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome Links  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Mathematical Calculator</title>
+  </head>
+  <body>
+    <header>
+      <div id="loading-screen">
+        <div class="spinner"></div>
+        <h1>Blade Runner 2049</h1>
+      </div>
+      <h1 class="heading">Blade Runner 2049<span></span></h1>
+    </header>
+
+    <div class="calculator">
+      <div class="screen">0</div>
+      <button class="button" value="(" data-key="(">(</button>
+      <button class="button" value=")" data-key=")">)</button>
+      <button class="button clear" value="C" data-key="Escape">C</button>
+      <button class="button operator" value="/" data-key="/">/</button>
+      <button class="button operator" value="*" data-key="*">*</button>
+      <button class="button" value="7" data-key="7">7</button>
+      <button class="button" value="8" data-key="8">8</button>
+      <button class="button" value="9" data-key="9">9</button>
+      <button class="button operator" value="-" data-key="-">-</button>
+      <button class="button" value="4" data-key="4">4</button>
+      <button class="button" value="5" data-key="5">5</button>
+      <button class="button" value="6" data-key="6">6</button>
+      <button class="button operator" value="+" data-key="+">+</button>
+      <button class="button" value="1" data-key="1">1</button>
+      <button class="button" value="2" data-key="2">2</button>
+      <button class="button" value="3" data-key="3">3</button>
+      <button class="button equals" value="=" data-key="Enter">=</button>
+      <button class="button" value="0" data-key="0">0</button>
+      <button class="button" value="." data-key=".">.</button>
+    </div>
+    <div class="container">
+      <canvas id="canvas1"></canvas>
+      <canvas id="canvas2"></canvas>
+      <canvas id="canvas3"></canvas>
+    </div>
+
+    <button id="audio-toggle" class="audio-toggle">
+      <span class="play-button"></span>
+    </button>
+
+    <audio id="myAudio" src="audio/audio4.mp3" preload="auto"></audio>
+  </body>
+
+  <script src="script.js"></script>
+</html>
