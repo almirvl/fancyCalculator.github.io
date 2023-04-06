@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   selectRandomTrack();
 
-  audioToggle.classList.add('paused');
+  
 
   audioToggle.addEventListener('click', () => {
     playButton.classList.toggle('paused');
