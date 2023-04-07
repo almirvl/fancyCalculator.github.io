@@ -16,11 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
 ////AUDIO
 
 document.addEventListener('DOMContentLoaded', () => {
- const audioTracks = [
-    'audio1.mp3',
-    'audio2.mp3',
-    'audio3.mp3',
-    'audio4.mp3',
+  const audioTracks = [
+    'audio/audio1.mp3',
+    'audio/audio2.mp3',
+    'audio/audio3.mp3',
+    'audio/audio4.mp3',
   ];
 
   const audioToggle = document.getElementById('audio-toggle');
@@ -33,9 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   selectRandomTrack();
-
-  
-
+  audioToggle.classList.add('paused');
   audioToggle.addEventListener('click', () => {
     playButton.classList.toggle('paused');
     audioToggle.classList.toggle('paused');
@@ -261,27 +259,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const buttons = document.querySelectorAll('.button');
   const screen = document.querySelector('.screen');
   let screenValue = '';
+  let isResult = false;
 
-  // add click event listener to each button
-  //   buttons.forEach(function (button) {
-  //     button.addEventListener('click', function () {
-  //       const buttonText = button.textContent;
-
-  //       if (buttonText === 'C') {
-  //         // clear screen
-  //         screenValue = '';
-  //         screen.textContent = screenValue;
-  //       } else if (buttonText === '=' || buttonText === 'Enter') {
-  //         // evaluate expression
-  //         screen.textContent = eval(screenValue);
-  //         screenValue = screen.textContent;
-  //       } else {
-  //         // append text to screen
-  //         screenValue += buttonText;
-  //         screen.textContent = screenValue;
-  //       }
-  //     });
-  //   });
   buttons.forEach(function (button) {
     button.addEventListener('click', function () {
       const buttonText = button.textContent;
@@ -297,22 +276,100 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  //UPDATE FONT SIZE
+
+  function updateFontSize() {
+    const currentInputLength = getCurrentInputDigits();
+    if (currentInputLength < 10) {
+      screen.style.fontSize = '24px';
+    } else if (currentInputLength >= 10 && currentInputLength < 20) {
+      screen.style.fontSize = '20px';
+    } else if (currentInputLength >= 20 && currentInputLength < 30) {
+      screen.style.fontSize = '16px';
+    } else if (currentInputLength >= 30) {
+      screen.style.fontSize = '12px';
+    }
+  }
+
+  //GET CURRENT INPUT
+
+  function getCurrentInputDigits() {
+    const lastOperatorIndex = Math.max(
+      screenValue.lastIndexOf('+'),
+      screenValue.lastIndexOf('-'),
+      screenValue.lastIndexOf('*'),
+      screenValue.lastIndexOf('/')
+    );
+    const currentInput = screenValue.slice(lastOperatorIndex + 1);
+    return currentInput.length;
+  }
+
+  ////////HANDLE BUTTONS
   function handleButtonClick(buttonText) {
+    console.log('Clicked:', buttonText); // Add this line
+    if (isResult && !(buttonText === 'C')) {
+      if (!isNaN(buttonText) || buttonText === '(' || buttonText === '.') {
+        screenValue = '';
+        isResult = false;
+      } else {
+        return;
+      }
+    }
+
+    // Add this condition to limit the max size of the first input number
+    if (
+      getCurrentInputDigits() >= 32 &&
+      (!isNaN(buttonText) || buttonText === '.')
+    ) {
+      return;
+    }
+
     if (buttonText === 'C') {
       // clear screen
       screenValue = '';
-      screen.textContent = screenValue;
+      screen.textContent = '0';
     } else if (buttonText === '=' || buttonText === 'Enter') {
       // evaluate expression
+      if (screenValue.includes('(') && !screenValue.includes(')')) {
+        screenValue += ')';
+      }
+      const expression = screenValue; // Add this line to define the expression variable
       screen.textContent = eval(screenValue);
       screenValue = screen.textContent;
+      isResult = true;
+
+      // Add the entire calculation to history
+      const historyEntry = document.createElement('div');
+      historyEntry.textContent = `${expression} = ${screenValue}`;
+      historyContent.appendChild(historyEntry);
+    } else if (buttonText === '⌫') {
+      // erase last character from screenValue
+      screenValue = screenValue.slice(0, -1);
+      screen.textContent = screenValue;
+    } else if (buttonText === 'H') {
+      historyContainer.style.display =
+        historyContainer.style.display === 'none' ? 'block' : 'none';
     } else {
       // append text to screen
+      if (
+        (buttonText === '+' ||
+          buttonText === '-' ||
+          buttonText === '*' ||
+          buttonText === '/') &&
+        (screenValue[screenValue.length - 1] === '+' ||
+          screenValue[screenValue.length - 1] === '-' ||
+          screenValue[screenValue.length - 1] === '*' ||
+          screenValue[screenValue.length - 1] === '/')
+      ) {
+        screenValue = screenValue.slice(0, -1);
+      }
       screenValue += buttonText;
       screen.textContent = screenValue;
+      updateFontSize(); //Update FontSize
     }
   }
-  // add keydown event listener to document
+
+  //KEYDOWN events
   document.addEventListener('keydown', function (event) {
     const keyName = event.key;
     const validKeys = [
@@ -336,15 +393,29 @@ document.addEventListener('DOMContentLoaded', function () {
       'Enter',
       'Backspace',
       'Escape',
+      'C',
     ];
 
     // check if pressed key is a valid calculator button
     if (validKeys.includes(keyName)) {
       event.preventDefault(); // prevent default action of key press
       if (keyName === 'Backspace') {
+        if (isResult) {
+          return;
+        }
+
         //erase last character from screenValue
         screenValue = screenValue.slice(0, -1);
         screen.textContent = screenValue;
+      } else if (keyName === 'Escape') {
+        screenValue = '';
+        screen.textContent = '0';
+        // Close the history window
+        historyContainer.style.display = 'none';
+      } else if (keyName === 'C') {
+        // Add this block
+        screenValue = '';
+        screen.textContent = '0';
       } else {
         // find corresponding button
         const button = document.querySelector(`.button[data-key="${keyName}"]`);
@@ -353,4 +424,18 @@ document.addEventListener('DOMContentLoaded', function () {
       // simulate click event on corresponding button
     }
   });
+});
+
+// History Section Window
+const historyBtn = document.querySelector('.history-btn');
+const historyContainer = document.getElementById('history-container');
+const historyCloseBtn = document.getElementById('history-close-btn');
+const historyContent = document.getElementById('history-content');
+
+historyBtn.addEventListener('click', () => {
+  historyContainer.style.display = 'block';
+});
+
+historyCloseBtn.addEventListener('click', () => {
+  historyContainer.style.display = 'none';
 });
