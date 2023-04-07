@@ -116,12 +116,25 @@
   z-index: -1;
   transform: translate(-50%, -50%);
 } */
-.container {
+/* .container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: -1;
+} */
+.container {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background-image: url('background.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   z-index: -1;
 }
 canvas {
@@ -170,33 +183,133 @@ body {
   }
 }
 
+
 .calculator {
-  width: 350px;
   margin: 0 auto;
+  width: 320px;
+  height: 420px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(5, 50px);
-  gap: 5px;
-  padding: 10px;
+  grid-gap: 5px;
+  background-color: #1c1c1c;
+  padding: 20px;
+  border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.1); /* updated background-color */
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
 }
 
+
+
 .screen {
-  grid-column: 1 / span 4;
-  grid-row: 1;
+  grid-column: span 4;
+  height: 70px;
   background-color: #333;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10px;
   color: #00c7b7;
-  text-align: right;
-  padding: 10px;
-  font-size: 1.8em;
-  height: 120px;
+  font-size: 24px;
   border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 199, 183, 0.3) inset;
+  overflow-x: auto; /* Make sure horizontal scrolling is enabled */
+  overflow-y: hidden;
+  max-width: 100%;
+  white-space: nowrap; /* Prevent text from wrapping */
 }
 
-.button {
+.screen-content {
+  color: #00c7b7;
+  font-size: 24px;
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+/* HISTORY SECTION */
+/* .history-btn {
+  grid-column: 1 / span 2;
+} */
+
+.history-btn {
+  grid-column: 4;
+  grid-row: 1;
+  margin-top: -15px;
+  margin-bottom: 10px;
+  background-color: #4caf50;
+}
+.history-btn:hover {
+  background-color: #5fd563;
+}
+
+.history-container {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  width: 80%;
+  height: 50%;
+  background-color: #28374a;
+  border: 2px solid #0f2a3e;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(21, 206, 246, 0.5);
+  display: none;
+}
+
+/* WHITE */
+
+/* .history-container {
+  display: none;
+  position: fixed;
+  left: 50%;
+  bottom: 50%;
+  transform: translate(-50%, 50%);
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+} */
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* .history-close-btn {
+  background-color: transparent;
+  border: none;
+  color: #15ceef;
+  font-size: 20px;
+  cursor: pointer;
+  outline: none;
+} */
+
+.history-close-btn:hover {
+  background-color: #f37377;
+}
+.history-close-btn {
+  background-color: #f0595f;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.history-content {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.history-entry {
+  border-bottom: 1px solid #ccc;
+  padding: 5px 0;
+}
+
+/* .button {
   grid-column: span 1;
   grid-row: span 1;
   font-size: 1.2em;
@@ -207,6 +320,21 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
   box-shadow: 0 0 5px rgba(0, 199, 183, 0.3);
+} */
+
+.button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  font-size: 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  height: 50px;
+  border: 1px solid #00c7b7;
+}
+.button.erase {
+  font-size: 18px;
 }
 
 .button:hover {
@@ -217,7 +345,7 @@ body {
 }
 
 .clear {
-  background-color: #00c7b7;
+  background-color: #f43a59;
   color: #111;
 }
 
@@ -230,6 +358,19 @@ body {
 .button:focus {
   outline: none;
 }
+
+.erase,
+.equals,
+.operator {
+  background-color: #00c7b7;
+}
+.clear:hover,
+.erase:hover,
+.equals:hover,
+.operator:hover {
+  background-color: #00c7b7;
+}
+
 header {
   display: flex;
   justify-content: center;
@@ -261,124 +402,6 @@ header {
   padding: 0 0.2em;
   background-color: #111;
 }
-
-/* AUDIO BUTTON */
-/* #audio-toggle {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 10;
-}
-
-#audio-toggle span {
-  display: block;
-  height: 20px;
-  width: 20px;
-  position: relative;
-}
-
-#audio-toggle span:before,
-#audio-toggle span:after {
-  content: '';
-  display: block;
-  height: 10px;
-  width: 3px;
-  background-color: #fff;
-  position: absolute;
-  left: 8px;
-  top: 5px;
-  border-radius: 10px;
-}
-
-#audio-toggle span:before {
-  transform: rotate(45deg);
-}
-
-#audio-toggle span:after {
-  transform: rotate(-45deg);
-}
-
-#audio-toggle.on span:before,
-#audio-toggle.on span:after {
-  height: 15px;
-}
-
-#audio-toggle.on span:before {
-  transform: rotate(90deg);
-  top: -5px;
-}
-
-#audio-toggle.on span:after {
-  transform: rotate(180deg);
-  top: 0;
-  left: 0;
-}
-
-#audio-toggle.on span:before,
-#audio-toggle.on span:after {
-  background-color: #ff3366;
-}
-
-#audio-toggle.on:hover span:before,
-#audio-toggle.on:hover span:after {
-  background-color: #ff3366;
-}
-
-#audio-toggle:focus {
-  outline: none;
-}
-
-#audio-toggle:focus span:before,
-#audio-toggle:focus span:after {
-  box-shadow: 0 0 0 3px #ff3366, 0 0 0 6px rgba(0, 0, 0, 0.5);
-} */
-/* /////////////////////////////////////////// */
-/* #audio-toggle .play-button {
-    position: relative;
-    width: 50px;
-    height: 50px;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-  }
-  
-  #audio-toggle .play-button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 0;
-    height: 0;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
-    border-left: 25px solid #fff;
-  }
-  
-  #audio-toggle .play-button:hover::before {
-    border-left-color: #ff3366;
-  }
-  
-  #audio-toggle .play-button.playing::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #ff3366;
-  }
-
-
- */
 
 #audio-toggle {
   position: fixed;
@@ -470,7 +493,7 @@ header {
     margin-top: 30px;
   }
   #audio-toggle {
-    top: 20px;
-    right: 20px;
+    top: 60px;
+    right: 10px;
   }
 }
