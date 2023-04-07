@@ -17,10 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   const audioTracks = [
-    'audio/audio1.mp3',
-    'audio/audio2.mp3',
-    'audio/audio3.mp3',
-    'audio/audio4.mp3',
+    'audio/audio1.ogg',
+    'audio/audio2.ogg',
+    'audio/audio3.ogg',
+    'audio/audio4.ogg',
   ];
 
   const audioToggle = document.getElementById('audio-toggle');
