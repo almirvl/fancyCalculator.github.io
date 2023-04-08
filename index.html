@@ -7,6 +7,11 @@
     <!-- StyleSheets -->
     <link rel="stylesheet" href="style.css" />
     <!-- Global Font Links -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -84,14 +89,15 @@
       <button class="button" value="0" data-key="0">0</button>
       <button class="button equals" value="=" data-key="Enter">=</button>
       <button class="button operator" value="-" data-key="-">-</button>
-    </div>
-    <div class="history-container" id="history-container">
-      <div class="history-header">
-        <h2>History</h2>
-        <button class="history-close-btn" id="history-close-btn">X</button>
+      <div class="history-container" class="history" id="history-container">
+        <div class="history-header">
+          <h2>History</h2>
+          <button class="history-close-btn" id="history-close-btn">X</button>
+        </div>
+        <div class="history-content" id="history-content"></div>
       </div>
-      <div class="history-content" id="history-content"></div>
     </div>
+
     <div class="container">
       <canvas id="canvas1"></canvas>
       <canvas id="canvas2"></canvas>
@@ -102,7 +108,7 @@
       <span class="play-button"></span>
     </button>
 
-    <audio id="myAudio" src="audio4.mp3" preload="auto"></audio>
+    <audio id="myAudio" src="audio/audio4.mp3" preload="auto"></audio>
   </body>
 
   <script src="script.js"></script>
