@@ -3,8 +3,23 @@
   margin: 0;
   padding: 0;
 }
-/* Add this CSS inside your <style> tag or CSS file */
+body {
+  background-color: #111;
+  color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  background-image: url('https://images.unsplash.com/photo-1611419010019-550124aef004?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1664&q=80');
 
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  animation-name: slide;
+  animation-duration: 10s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
 #loading-screen {
   position: fixed;
   top: 0;
@@ -157,23 +172,6 @@ canvas {
 #canvas1 {
   z-index: 100;
 }
-body {
-  background-color: #111;
-  color: #fff;
-  font-family: 'Open Sans', sans-serif;
-  background-image: url('https://images.unsplash.com/photo-1611419010019-550124aef004?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1664&q=80');
-
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  animation-name: slide;
-  animation-duration: 10s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
 
 @keyframes slide {
   0% {
@@ -188,6 +186,8 @@ body {
 }
 
 .calculator {
+  position: relative;
+  z-index: 1;
   margin: 0 auto;
   width: 320px;
   height: 420px;
@@ -226,9 +226,46 @@ body {
 }
 
 /* HISTORY SECTION */
-/* .history-btn {
-  grid-column: 1 / span 2;
-} */
+
+/* HISTORY SECTION */
+
+/* HISTORY SECTION */
+.calculator,
+.history {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 18px;
+  font-weight: 300;
+  color: #fff;
+}
+
+/* Use a Google font that matches the Blade Runner 2049 theme */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
+
+/* Example styling for the history panel */
+.history {
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 10px;
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.history h2 {
+  font-size: 24px;
+  margin-top: 0;
+  color: #f0595f;
+}
+
+.history p {
+  margin: 5px 0;
+  color: #fff;
+  font-size: 20px;
+}
+
+.history .history-item {
+  border-bottom: 1px solid #666;
+  padding-bottom: 5px;
+}
 
 .history-btn {
   grid-column: 4;
@@ -243,33 +280,39 @@ body {
 
 .history-container {
   position: absolute;
+  top: 0;
+  left: calc(100% + 10px);
   bottom: 50%;
   left: 50%;
   transform: translate(-50%, 50%);
-  width: 80%;
-  height: 50%;
+  width: 88%;
+  height: 66%;
   background-color: #28374a;
   border: 2px solid #0f2a3e;
   border-radius: 5px;
   padding: 20px;
-  box-shadow: 0 0 20px rgba(21, 206, 246, 0.5);
+  box-shadow: 0 0 40px rgba(135, 247, 237, 0.5);
   display: none;
 }
+/* History Panel Scroll Bar */
 
-/* WHITE */
+.history-content::-webkit-scrollbar {
+  width: 8px;
+}
 
-/* .history-container {
-  display: none;
-  position: fixed;
-  left: 50%;
-  bottom: 50%;
-  transform: translate(-50%, 50%);
-  background-color: #ffffff;
-  border-radius: 5px;
-  padding: 20px;
-  width: 300px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-} */
+.history-content::-webkit-scrollbar-track {
+  background: #212121;
+}
+
+.history-content::-webkit-scrollbar-thumb {
+  background-color: #f0595f;
+  border-radius: 20px;
+  border: 2px solid #212121;
+}
+
+.history-content::-webkit-scrollbar-thumb:hover {
+  background-color: #e04d4f;
+}
 
 .history-header {
   display: flex;
@@ -277,15 +320,6 @@ body {
   align-items: center;
   margin-bottom: 10px;
 }
-
-/* .history-close-btn {
-  background-color: transparent;
-  border: none;
-  color: #15ceef;
-  font-size: 20px;
-  cursor: pointer;
-  outline: none;
-} */
 
 .history-close-btn:hover {
   background-color: #f37377;
@@ -295,7 +329,7 @@ body {
   border: none;
   color: white;
   padding: 5px 10px;
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
   border-radius: 5px;
 }
@@ -308,20 +342,10 @@ body {
 .history-entry {
   border-bottom: 1px solid #ccc;
   padding: 5px 0;
-}
-
-/* .button {
-  grid-column: span 1;
-  grid-row: span 1;
-  font-size: 1.2em;
-  background-color: #333;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 20px;
   color: #fff;
-  border: 1px solid #00c7b7;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  box-shadow: 0 0 5px rgba(0, 199, 183, 0.3);
-} */
+}
 
 .button {
   background-color: #333;
